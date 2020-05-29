@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from "react"
+import Axios from "axios"
 
 function Search() {
-  const [query, setQuery] = useState()
-  const [results, setResults] = useState({})
-  const [loading, setLoading] = useState(false)
-  const [message, setMessage] = useState()
-
-  function handleChange(e) {
-    setLoading(true)
-    setMessage("")
-    setQuery(e.target.value)
-  }
   return (
     <>
       <div className="container">
