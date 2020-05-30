@@ -689,3 +689,7 @@ textarea.tall-textarea {
     transform: rotate(360deg);
   }
 }
+
+.paginationComponent {
+  position: absolute;
+}

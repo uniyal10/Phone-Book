@@ -16,18 +16,24 @@ import Search from "./components/Search"
 import Add from "./components/Add"
 import AddForm from "./components/AddForm"
 import EditForm from "./components/EditForm"
+import Pagination from "./components/Pagination"
 
 function ExampleComponent() {
   const [isSearch, setSearch] = useState(false)
   const [isAdd, setAdd] = useState(false)
-  // const [isEdit, setEdit] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [state, setState] = useImmer({
-    isLoading: true,
-    list: []
-  })
+
+  //pagination
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postPerPage, setPostPerPage] = useState(5)
+
+  // const [state, setState] = useImmer({
+  //   list: []
+  // })
   const initialState = {
-    isEdit: false
+    isEdit: false,
+    list: []
   }
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -49,20 +55,38 @@ function ExampleComponent() {
   // }, [])
 
   useEffect(() => {
+    setLoading(true)
     async function getInitData() {
       try {
         let response = await Axios.get("http://localhost:8080/")
-        setState(draft => {
-          draft.isLoading = false
-          draft.list = response.data
-          console.log(draft.list)
-        })
+        State.list = response.data
+        setLoading(false)
       } catch (e) {
         console.log("something wrong")
       }
     }
     getInitData()
   }, [])
+  useEffect(() => {
+    async function getInitData() {
+      try {
+        let response = await Axios.get("http://localhost:8080/")
+        State.list = response.data
+        setLoading(false)
+      } catch (e) {
+        console.log("something wrong")
+      }
+    }
+    getInitData()
+  }, [isAdd])
+
+  const indexOfLastPost = currentPage * postPerPage
+  const indexOfFirstPost = indexOfLastPost - postPerPage
+  const currentPosts = State.list.slice(indexOfFirstPost, indexOfLastPost)
+
+  //paginate
+
+  const paginate = pageNumber => setCurrentPage(pageNumber)
 
   return (
     <StateContext.Provider value={State}>
@@ -71,7 +95,7 @@ function ExampleComponent() {
           <Header setSearch={setSearch} />
           {isSearch && <Search />}
 
-          {state.list.map(listItem => {
+          {currentPosts.map(listItem => {
             return (
               <>
                 <Contact key={listItem._id} listItem={listItem} />
@@ -84,6 +108,7 @@ function ExampleComponent() {
           {isAdd && <AddForm setAdd={setAdd} setLoading={setLoading} />}
           {State.isEdit && <EditForm />}
           {loading && <div className="loader"></div>}
+          {!State.isEdit && !isAdd && <Pagination postsPerPage={postPerPage} totalPosts={State.list.length} paginate={paginate} />}
         </>
       </DispatchContext.Provider>
     </StateContext.Provider>
