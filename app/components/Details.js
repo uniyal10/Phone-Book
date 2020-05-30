@@ -14,7 +14,7 @@ function Details(props) {
   return (
     <div style={contactDiv}>
       <div className="d-flex justify-content-between mt-2">
-        <p>23/01/1990</p>
+        <p>{props.contactDetails.date}</p>
         <span className="pt-2">
           <a onClick={handleEdit} href="#" className=" text-primary mr-2">
             <i className="fas fa-edit"></i>
@@ -24,7 +24,7 @@ function Details(props) {
           </a>
         </span>
       </div>
-      <Number />
+      <Number numberDetails={props.contactDetails} />
     </div>
   )
 }

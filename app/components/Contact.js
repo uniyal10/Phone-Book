@@ -17,14 +17,14 @@ function Contact(props) {
     <>
       <div>
         <div onClick={handleClick} id={props.listItem._id} className="list-group-item list-group-item-action d-flex justify-content-between">
-          <span className="text-muted large contactName">Sudhanshu Uniyal</span>
+          <span className="text-muted large contactName">{props.listItem.name}</span>
           <a>
             <i style={Styletoggle} className={"fas fa-sort-" + (downIcon ? "down" : "up")}></i>
           </a>
         </div>
       </div>
-      {toggle && <Details setEdit={setEdit} />}
-      {isEdit && <EditForm setEdit={setEdit} />}
+      {toggle && <Details setEdit={setEdit} contactDetails={props.listItem} />}
+      {/* {isEdit && <EditForm setEdit={setEdit} />} */}
     </>
   )
 }

@@ -1,15 +1,15 @@
 import React, { useEffect } from "react"
 
-function Number() {
+function Number(props) {
   return (
     <>
       <div>
         <span className="pt-2 d-flex ml-2">
           <a href="#" className="d-flex text-primary mr-2">
-            <i style={Styletoggle} className="fas fa-phone-square"></i> <p className="ml-1">9729866770</p>
+            <i style={Styletoggle} className="fas fa-phone-square"></i> <p className="ml-1">{props.numberDetails.number}</p>
           </a>
           <a href="#" className="d-flex text-primary mr-2">
-            <i style={Styletoggle} className="fas fa-envelope-square"></i> <p className="ml-1">uniyal10@gmail.com</p>
+            <i style={Styletoggle} className="fas fa-envelope-square"></i> <p className="ml-1">{props.numberDetails.email}</p>
           </a>
         </span>
       </div>
