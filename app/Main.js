@@ -34,7 +34,14 @@ function ExampleComponent() {
   const initialState = {
     isEdit: false,
     list: [],
-    search: []
+    search: [],
+    editState: {
+      id: "",
+      name: "",
+      date: "",
+      number: "",
+      email: ""
+    }
   }
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -49,6 +56,9 @@ function ExampleComponent() {
           return contact.name.toLowerCase().indexOf(action.value.toLowerCase()) !== -1
         })
         return
+      case "editState":
+        console.log(action.value)
+        draft.editState = action.value
     }
   }
   const [State, dispatch] = useImmerReducer(ourReducer, initialState)
@@ -74,6 +84,20 @@ function ExampleComponent() {
     }
     getInitData()
   }, [])
+
+  useEffect(() => {
+    async function getInitData() {
+      try {
+        let response = await Axios.get("http://localhost:8080/")
+        State.list = response.data
+        State.search = response.data
+        setLoading(false)
+      } catch (e) {
+        console.log("something wrong")
+      }
+    }
+    getInitData()
+  }, [isAdd])
 
   useEffect(() => {
     async function getInitData() {

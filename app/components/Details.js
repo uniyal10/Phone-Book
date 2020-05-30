@@ -7,6 +7,7 @@ function Details(props) {
 
   function handleEdit() {
     appDispatch({ type: "edit", value: true })
+    appDispatch({ type: "editState", value: { id: props.contactDetails._id, name: props.contactDetails.name, date: props.contactDetails.date, number: props.contactDetails.number, email: props.contactDetails.email } })
   }
   function handleDelete() {
     //axios
