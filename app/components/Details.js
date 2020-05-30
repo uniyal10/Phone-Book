@@ -1,8 +1,12 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useContext } from "react"
 import Number from "./Number"
+import DispatchContext from "../DispatchContext"
+
 function Details(props) {
+  const appDispatch = useContext(DispatchContext)
+
   function handleEdit() {
-    props.setEdit(true)
+    appDispatch({ type: "edit", value: true })
   }
   function handleDelete() {
     //axios

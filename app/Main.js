@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react"
 import ReactDOM from "react-dom"
 import Axios from "axios"
+import { useImmer } from "use-immer"
+import DispatchContext from "./DispatchContext"
+import StateContext from "./StateContext"
+
+import { useImmerReducer } from "use-immer"
 
 //Components
 
@@ -15,9 +20,26 @@ import EditForm from "./components/EditForm"
 function ExampleComponent() {
   const [isSearch, setSearch] = useState(false)
   const [isAdd, setAdd] = useState(false)
-  const [isEdit, setEdit] = useState(false)
+  // const [isEdit, setEdit] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [data, setData] = useState([])
+  const [state, setState] = useImmer({
+    isLoading: true,
+    list: []
+  })
+  const initialState = {
+    isEdit: false
+  }
+  function ourReducer(draft, action) {
+    switch (action.type) {
+      case "editClose":
+        draft.isEdit = action.value
+        return
+      case "edit":
+        draft.isEdit = action.value
+        return
+    }
+  }
+  const [State, dispatch] = useImmerReducer(ourReducer, initialState)
 
   // useEffect(() => {
   //   function handleToggle() {
@@ -28,32 +50,43 @@ function ExampleComponent() {
 
   useEffect(() => {
     async function getInitData() {
-      let response = await Axios.get("http://localhost:8080/")
-      setData(response.data)
+      try {
+        let response = await Axios.get("http://localhost:8080/")
+        setState(draft => {
+          draft.isLoading = false
+          draft.list = response.data
+          console.log(draft.list)
+        })
+      } catch (e) {
+        console.log("something wrong")
+      }
     }
     getInitData()
   }, [])
 
   return (
-    <>
-      <Header setSearch={setSearch} />
-      {isSearch && <Search />}
+    <StateContext.Provider value={State}>
+      <DispatchContext.Provider value={dispatch}>
+        <>
+          <Header setSearch={setSearch} />
+          {isSearch && <Search />}
 
-      {data.map(listItem => {
-        return (
-          <>
-            {" "}
-            <Contact />
-            <Details setEdit={setEdit} />
-          </>
-        )
-      })}
+          {state.list.map(listItem => {
+            return (
+              <>
+                <Contact key={listItem._id} listItem={listItem} />
+                {/* <Details setEdit={setEdit} /> */}
+              </>
+            )
+          })}
 
-      <Add setAdd={setAdd} />
-      {isAdd && <AddForm setAdd={setAdd} setLoading={setLoading} />}
-      {isEdit && <EditForm setEdit={setEdit} />}
-      {loading && <div className="loader"></div>}
-    </>
+          <Add setAdd={setAdd} />
+          {isAdd && <AddForm setAdd={setAdd} setLoading={setLoading} />}
+          {State.isEdit && <EditForm />}
+          {loading && <div className="loader"></div>}
+        </>
+      </DispatchContext.Provider>
+    </StateContext.Provider>
   )
 }
 

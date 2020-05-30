@@ -1,8 +1,10 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useContext } from "react"
+import DispatchContext from "../DispatchContext"
 
 function EditForm(props) {
+  const appDispatch = useContext(DispatchContext)
   function handleClick() {
-    props.setEdit(prev => !prev)
+    appDispatch({ type: "editClose", value: false })
   }
   return (
     <div className="addFormStyleModel">
