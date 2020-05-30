@@ -13,19 +13,18 @@ import AddForm from "./components/AddForm"
 import EditForm from "./components/EditForm"
 
 function ExampleComponent() {
-  const [toggle, setToggle] = useState(false)
   const [isSearch, setSearch] = useState(false)
   const [isAdd, setAdd] = useState(false)
   const [isEdit, setEdit] = useState(false)
   const [loading, setLoading] = useState(false)
   const [data, setData] = useState([])
 
-  useEffect(() => {
-    function handleToggle() {
-      setToggle(false)
-    }
-    handleToggle()
-  }, [])
+  // useEffect(() => {
+  //   function handleToggle() {
+  //     setToggle(false)
+  //   }
+  //   handleToggle()
+  // }, [])
 
   useEffect(() => {
     async function getInitData() {
@@ -39,8 +38,17 @@ function ExampleComponent() {
     <>
       <Header setSearch={setSearch} />
       {isSearch && <Search />}
-      <Contact setToggle={setToggle} />
-      {toggle ? <Details setEdit={setEdit} /> : " "}
+
+      {data.map(listItem => {
+        return (
+          <>
+            {" "}
+            <Contact />
+            <Details setEdit={setEdit} />
+          </>
+        )
+      })}
+
       <Add setAdd={setAdd} />
       {isAdd && <AddForm setAdd={setAdd} setLoading={setLoading} />}
       {isEdit && <EditForm setEdit={setEdit} />}

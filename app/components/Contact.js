@@ -2,9 +2,16 @@ import React, { useEffect, useState } from "react"
 
 function Contact(props) {
   const [downIcon, setDownIcon] = useState(true)
+  const [toggle, setToggle] = useState(false)
+  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    setToggle(prev => !prev)
+  }, count)
+
   function handleClick() {
-    setDownIcon(prev => !prev)
-    props.setToggle(prev => !prev)
+    console.log(count)
+    setCount(prev => prev + 1)
   }
   useEffect(() => {}, downIcon)
   return (
