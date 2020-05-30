@@ -74,6 +74,7 @@ function ExampleComponent() {
     }
     getInitData()
   }, [])
+
   useEffect(() => {
     async function getInitData() {
       try {
@@ -92,7 +93,11 @@ function ExampleComponent() {
 
   const indexOfLastPost = currentPage * postPerPage
   const indexOfFirstPost = indexOfLastPost - postPerPage
-  const currentPosts = State.search.slice(indexOfFirstPost, indexOfLastPost)
+  const currentPosts = State.search.slice(indexOfFirstPost, indexOfLastPost).sort((a, b) => {
+    if (a.name.toLowerCase() < b.name.toLowerCase()) return -1
+    if (a.name.toLowerCase() > b.name.toLowerCase()) return 1
+    return 0
+  })
 
   //paginate
 
@@ -118,7 +123,7 @@ function ExampleComponent() {
           {isAdd && <AddForm setAdd={setAdd} setLoading={setLoading} />}
           {State.isEdit && <EditForm />}
           {loading && <div className="loader"></div>}
-          {!State.isEdit && !isAdd && <Pagination postsPerPage={postPerPage} totalPosts={State.list.length} paginate={paginate} />}
+          {!State.isEdit && !isAdd && <Pagination postsPerPage={postPerPage} totalPosts={State.search.length} paginate={paginate} />}
         </>
       </DispatchContext.Provider>
     </StateContext.Provider>
