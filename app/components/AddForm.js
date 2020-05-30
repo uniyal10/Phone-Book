@@ -13,9 +13,13 @@ function AddForm(props) {
 
   async function handleSubmit(e) {
     e.preventDefault()
+    props.setLoading(true)
     try {
       let response = await Axios.post("http://localhost:8080/add", { name, date, number, email })
-      if (response) props.setAdd(false)
+      if (response.data) {
+        props.setAdd(false)
+        props.setLoading(false)
+      }
     } catch (e) {
       console.log("there is some problem")
     }
@@ -57,10 +61,5 @@ function AddForm(props) {
   )
 }
 
-const cross = {
-  position: "relative",
-  left: "95%",
-  color: "red",
-  fontSize: "20px"
-}
+const cross = {}
 export default AddForm

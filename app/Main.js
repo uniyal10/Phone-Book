@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react"
 import ReactDOM from "react-dom"
+import Axios from "axios"
 
 //Components
 
@@ -16,12 +17,22 @@ function ExampleComponent() {
   const [isSearch, setSearch] = useState(false)
   const [isAdd, setAdd] = useState(false)
   const [isEdit, setEdit] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState([])
 
   useEffect(() => {
     function handleToggle() {
       setToggle(false)
     }
     handleToggle()
+  }, [])
+
+  useEffect(() => {
+    async function getInitData() {
+      let response = await Axios.get("http://localhost:8080/")
+      setData(response.data)
+    }
+    getInitData()
   }, [])
 
   return (
@@ -31,8 +42,9 @@ function ExampleComponent() {
       <Contact setToggle={setToggle} />
       {toggle ? <Details setEdit={setEdit} /> : " "}
       <Add setAdd={setAdd} />
-      {isAdd && <AddForm setAdd={setAdd} />}
+      {isAdd && <AddForm setAdd={setAdd} setLoading={setLoading} />}
       {isEdit && <EditForm setEdit={setEdit} />}
+      {loading && <div className="loader"></div>}
     </>
   )
 }
