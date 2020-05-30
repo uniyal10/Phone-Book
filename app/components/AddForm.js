@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react"
+import Axios from "axios"
 
 function AddForm(props) {
   const [name, setName] = useState()
@@ -10,25 +11,27 @@ function AddForm(props) {
     props.setAdd(false)
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
-    console.log(name)
-    console.log(email)
-    console.log(date)
-    console.log(number)
+    try {
+      let response = await Axios.post("http://localhost:8080/add", { name, date, number, email })
+      if (response) props.setAdd(false)
+    } catch (e) {
+      console.log("there is some problem")
+    }
   }
 
   return (
     <div className="addFormStyleModel">
       <div className="addFormStyle">
-        <span onClick={handleClick} style={cross}>
+        <span onClick={handleClick} className="cross">
           <i class="fas fa-times"></i>
         </span>
         <form onSubmit={handleSubmit} action="#">
           <div className="addFormInput">
             <label htmlFor="name">Name</label>
             <br />
-            <input onChange={e => setName(e.target.value)} type="text" />
+            <input name="name" onChange={e => setName(e.target.value)} type="text" required />
           </div>
 
           <div className="addFormInput">
@@ -40,12 +43,12 @@ function AddForm(props) {
           <div className="addFormInput">
             <label htmlFor="number">Number</label>
             <br />
-            <input onChange={e => setNumber(e.target.value)} type="number" />
+            <input onChange={e => setNumber(e.target.value)} type="number" required />
           </div>
           <div className="addFormInput">
             <label htmlFor="email">Email</label>
             <br />
-            <input onChange={e => setEmail(e.target.value)} type="email" />
+            <input onChange={e => setEmail(e.target.value)} type="email" required />
           </div>
           <button className="btnStyle">Save</button>
         </form>

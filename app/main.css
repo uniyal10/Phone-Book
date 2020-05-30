@@ -1,5 +1,7 @@
+@import url("https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap");
 body {
   font-family: "Public Sans", sans-serif;
+  font-family: "Chelsea Market", cursive;
 }
 
 .header-bar {
@@ -625,4 +627,35 @@ textarea.tall-textarea {
   background-color: rgb(23, 23, 255);
   border-radius: 8px;
   border: none;
+}
+
+.btnStyle:active {
+  background-color: #80bdff;
+}
+.btnStyle:hover {
+  cursor: pointer;
+}
+.contactName {
+  font-size: large;
+  font-weight: bold;
+}
+
+.AddComponentStyle {
+  font-size: 60px;
+  position: absolute;
+  bottom: 10%;
+  right: 20%;
+}
+.AddComponentStyle:hover {
+  cursor: pointer;
+}
+
+.cross {
+  position: relative;
+  left: 95%;
+  color: red;
+  font-size: 20px;
+}
+.cross:hover {
+  cursor: pointer;
 }

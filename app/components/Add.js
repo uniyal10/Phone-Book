@@ -7,18 +7,11 @@ function Add(props) {
   }
   return (
     <>
-      <a onClick={handleClick} style={addStyle}>
+      <a onClick={handleClick} className="AddComponentStyle">
         <i class="fas fa-plus-circle"></i>
       </a>
     </>
   )
-}
-
-const addStyle = {
-  fontSize: "60px",
-  position: "absolute",
-  bottom: "10%",
-  right: "20%"
 }
 
 export default Add
