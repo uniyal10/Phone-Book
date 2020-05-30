@@ -1,16 +1,26 @@
 import React, { useEffect, useContext } from "react"
 import Number from "./Number"
 import DispatchContext from "../DispatchContext"
+import StateContext from "../StateContext"
+import Axios from "axios"
 
 function Details(props) {
   const appDispatch = useContext(DispatchContext)
+  const appState = useContext(StateContext)
 
   function handleEdit() {
     appDispatch({ type: "edit", value: true })
     appDispatch({ type: "editState", value: { id: props.contactDetails._id, name: props.contactDetails.name, date: props.contactDetails.date, number: props.contactDetails.number, email: props.contactDetails.email } })
   }
-  function handleDelete() {
-    //axios
+  async function handleDelete() {
+    try {
+      const response = await Axios.post("http://localhost:8080/delete", { id: appState.editState.id })
+      if (response) {
+        console.log("sucessfully deleted")
+      }
+    } catch (e) {
+      console.log("something wrong")
+    }
   }
   return (
     <div style={contactDiv}>

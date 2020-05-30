@@ -111,7 +111,7 @@ function ExampleComponent() {
       }
     }
     getInitData()
-  }, [isAdd])
+  }, [State.isEdit])
 
   useEffect(() => {}, [State.list])
 
@@ -137,7 +137,7 @@ function ExampleComponent() {
           {currentPosts.map(listItem => {
             return (
               <>
-                <Contact key={listItem._id} listItem={listItem} />
+                <Contact key={listItem} listItem={listItem} />
                 {/* <Details setEdit={setEdit} /> */}
               </>
             )
