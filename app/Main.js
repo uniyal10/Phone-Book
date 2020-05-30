@@ -33,7 +33,8 @@ function ExampleComponent() {
   // })
   const initialState = {
     isEdit: false,
-    list: []
+    list: [],
+    search: []
   }
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -42,6 +43,11 @@ function ExampleComponent() {
         return
       case "edit":
         draft.isEdit = action.value
+        return
+      case "filterData":
+        draft.search = draft.list.filter(contact => {
+          return contact.name.toLowerCase().indexOf(action.value.toLowerCase()) !== -1
+        })
         return
     }
   }
@@ -60,6 +66,7 @@ function ExampleComponent() {
       try {
         let response = await Axios.get("http://localhost:8080/")
         State.list = response.data
+        State.search = response.data
         setLoading(false)
       } catch (e) {
         console.log("something wrong")
@@ -72,6 +79,7 @@ function ExampleComponent() {
       try {
         let response = await Axios.get("http://localhost:8080/")
         State.list = response.data
+        State.search = response.data
         setLoading(false)
       } catch (e) {
         console.log("something wrong")
@@ -80,9 +88,11 @@ function ExampleComponent() {
     getInitData()
   }, [isAdd])
 
+  useEffect(() => {}, [State.list])
+
   const indexOfLastPost = currentPage * postPerPage
   const indexOfFirstPost = indexOfLastPost - postPerPage
-  const currentPosts = State.list.slice(indexOfFirstPost, indexOfLastPost)
+  const currentPosts = State.search.slice(indexOfFirstPost, indexOfLastPost)
 
   //paginate
 
