@@ -107,6 +107,19 @@ function ExampleComponent() {
     getInitData()
   }, [])
 
+  useEffect(() => {
+    async function getInitData() {
+      try {
+        let response = await Axios.get("http://localhost:8080/")
+        State.list = response.data
+        State.search = response.data
+      } catch (e) {
+        console.log("something wrong")
+      }
+    }
+    getInitData()
+  }, [State.isEdit])
+
   // useEffect(() => {
   //   async function getInitData() {
   //     try {

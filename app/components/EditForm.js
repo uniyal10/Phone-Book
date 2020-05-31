@@ -21,6 +21,7 @@ function EditForm(props) {
       let response = await Axios.post("http://localhost:8080/edit", { id: appState.editState.id, name: name, date: date, number: number, email: email })
       if (response.data) {
         appDispatch({ type: "editClose", value: false })
+        appDispatch.editState("editState", { id: appState.editState.id, name: name, date: date, number: number, email: email })
       }
     } catch (e) {
       console.log("there is some problem")
