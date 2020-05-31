@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
+import DispatchContext from "../DispatchContext"
 import Axios from "axios"
 
 function AddForm(props) {
@@ -7,16 +8,20 @@ function AddForm(props) {
   const [number, setNumber] = useState()
   const [email, setEmail] = useState()
 
+  const appDispatch = useContext(DispatchContext)
+
   function handleClick() {
     props.setAdd(false)
   }
 
   async function handleSubmit(e) {
     e.preventDefault()
+
     props.setLoading(true)
     try {
       let response = await Axios.post("http://localhost:8080/add", { name, date, number, email })
       if (response.data) {
+        appDispatch({ type: "addUserData", value: { name, date, number, email } })
         props.setAdd(false)
         props.setLoading(false)
       }

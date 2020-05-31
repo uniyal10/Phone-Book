@@ -32,6 +32,8 @@ function ExampleComponent() {
   //   list: []
   // })
   const initialState = {
+    isDelete: "",
+    isUpdate: 0,
     isEdit: false,
     list: [],
     search: [],
@@ -69,6 +71,16 @@ function ExampleComponent() {
       case "editState":
         console.log(action.value)
         draft.editState = action.value
+        return
+      case "updateState":
+        draft.isUpdate++
+        return
+      case "addUserData":
+        draft.search.push(action.value)
+        return
+      case "removeUserData":
+        draft.isDelete = action.value
+        return
     }
   }
   const [State, dispatch] = useImmerReducer(ourReducer, initialState)
@@ -95,35 +107,19 @@ function ExampleComponent() {
     getInitData()
   }, [])
 
-  useEffect(() => {
-    async function getInitData() {
-      try {
-        let response = await Axios.get("http://localhost:8080/")
-        State.list = response.data
-        State.search = response.data
-        setLoading(false)
-      } catch (e) {
-        console.log("something wrong")
-      }
-    }
-    getInitData()
-  }, [isAdd])
-
-  useEffect(() => {
-    async function getInitData() {
-      try {
-        let response = await Axios.get("http://localhost:8080/")
-        State.list = response.data
-        State.search = response.data
-        setLoading(false)
-      } catch (e) {
-        console.log("something wrong")
-      }
-    }
-    getInitData()
-  }, [State.isEdit])
-
-  useEffect(() => {}, [State.list])
+  // useEffect(() => {
+  //   async function getInitData() {
+  //     try {
+  //       let response = await Axios.get("http://localhost:8080/")
+  //       State.list = response.data
+  //       State.search = response.data
+  //       setLoading(false)
+  //     } catch (e) {
+  //       console.log("something wrong")
+  //     }
+  //   }
+  //   getInitData()
+  // }, [])
 
   const indexOfLastPost = currentPage * postPerPage
   const indexOfFirstPost = indexOfLastPost - postPerPage

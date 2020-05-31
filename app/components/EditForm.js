@@ -29,7 +29,7 @@ function EditForm(props) {
   return (
     <div className="addFormStyleModel">
       <div className="addFormStyle">
-        <span onClick={handleClick} style={cross}>
+        <span onClick={handleClick} className="cross">
           <i class="fas fa-times"></i>
         </span>
         <form onSubmit={handleSubmit} action="#">
@@ -61,10 +61,5 @@ function EditForm(props) {
     </div>
   )
 }
-const cross = {
-  position: "relative",
-  left: "95%",
-  color: "red",
-  fontSize: "20px"
-}
+
 export default EditForm

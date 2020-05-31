@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react"
+import React, { useEffect, useContext, useRef } from "react"
 import Number from "./Number"
 import DispatchContext from "../DispatchContext"
 import StateContext from "../StateContext"
@@ -12,10 +12,11 @@ function Details(props) {
     appDispatch({ type: "edit", value: true })
     appDispatch({ type: "editState", value: { id: props.contactDetails._id, name: props.contactDetails.name, date: props.contactDetails.date, number: props.contactDetails.number, email: props.contactDetails.email } })
   }
-  async function handleDelete() {
+  async function handleDelete(e) {
     try {
       const response = await Axios.post("http://localhost:8080/delete", { id: props.contactDetails._id })
       if (response) {
+        props.setDelete(true)
         console.log("sucessfully deleted")
       }
     } catch (e) {
