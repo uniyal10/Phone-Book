@@ -8,7 +8,12 @@ function Search() {
   const appDispatch = useContext(DispatchContext)
 
   function handleChange(e) {
-    appDispatch({ type: "filterData", value: e.target.value })
+    if (!isNaN(e.target.value)) {
+      appDispatch({ type: "filterDataByNumber", value: e.target.value })
+    } else {
+      appDispatch({ type: "filterData", value: e.target.value })
+      appDispatch({ type: "filterDataByEmail", value: e.target.value })
+    }
   }
   return (
     <div style={InputStyle}>

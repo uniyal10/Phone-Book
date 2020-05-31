@@ -56,6 +56,16 @@ function ExampleComponent() {
           return contact.name.toLowerCase().indexOf(action.value.toLowerCase()) !== -1
         })
         return
+      case "filterDataByNumber":
+        draft.search = draft.list.filter(contact => {
+          return contact.number.toLowerCase().indexOf(action.value.toLowerCase()) !== -1
+        })
+        return
+      case "filterDataByEmail":
+        draft.search = draft.list.filter(contact => {
+          if (action.value) return contact.email.toLowerCase().indexOf(action.value.toLowerCase()) !== -1
+        })
+        return
       case "editState":
         console.log(action.value)
         draft.editState = action.value
