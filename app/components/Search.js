@@ -11,9 +11,10 @@ function Search() {
     if (!isNaN(e.target.value)) {
       appDispatch({ type: "filterDataByNumber", value: e.target.value })
     }
-    if (e.target.value.includes("@")) {
-      appDispatch({ type: "filterDataByEmail", value: e.target.value })
-    } else {
+    // if (e.target.value.includes("@")) {
+    //   appDispatch({ type: "filterDataByEmail", value: e.target.value })
+    // }
+    else {
       appDispatch({ type: "filterData", value: e.target.value })
     }
   }

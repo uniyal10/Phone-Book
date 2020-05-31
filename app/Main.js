@@ -9,7 +9,7 @@ import { useImmerReducer } from "use-immer"
 Axios.defaults.baseURL = process.env.BACKENDURL || "https://mynotebookcontactapp.herokuapp.com"
 
 //Components
-
+import FlashMessages from "./components/FlashMessages"
 import Header from "./components/Header"
 import Contact from "./components/Contact"
 import Details from "./components/Details"
@@ -44,7 +44,8 @@ function ExampleComponent() {
       date: "",
       number: "",
       email: ""
-    }
+    },
+    flashMessages: []
   }
   function ourReducer(draft, action) {
     switch (action.type) {
@@ -53,6 +54,9 @@ function ExampleComponent() {
         return
       case "edit":
         draft.isEdit = action.value
+        return
+      case "flashMessage":
+        draft.flashMessages.push(action.value)
         return
       case "filterData":
         draft.search = draft.list.filter(contact => {
@@ -149,7 +153,10 @@ function ExampleComponent() {
   return (
     <StateContext.Provider value={State}>
       <DispatchContext.Provider value={dispatch}>
-        <>
+        <div className="containerDiv">
+          <div className="flashmessage">
+            <FlashMessages messages={State.flashMessages} />
+          </div>
           <Header setSearch={setSearch} />
           {isSearch && <Search />}
 
@@ -167,7 +174,7 @@ function ExampleComponent() {
           {State.isEdit && <EditForm />}
           {loading && <div className="loader"></div>}
           {!State.isEdit && !isAdd && <Pagination postsPerPage={postPerPage} totalPosts={State.search.length} paginate={paginate} />}
-        </>
+        </div>
       </DispatchContext.Provider>
     </StateContext.Provider>
   )

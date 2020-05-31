@@ -17,21 +17,21 @@ function Details(props) {
       const response = await Axios.post("/delete", { id: props.contactDetails._id })
       if (response) {
         props.setDelete(true)
-        console.log("sucessfully deleted")
+        appDispatch({ type: "flashMessage", value: "delete contact sucessfully" })
       }
     } catch (e) {
       console.log("something wrong")
     }
   }
   return (
-    <div style={contactDiv}>
+    <div className="detailsComponent">
       <div className="d-flex justify-content-between mt-2">
         <p>{props.contactDetails.date}</p>
         <span className="pt-2">
           <a onClick={handleEdit} href="#" className=" text-primary mr-2">
             <i className="fas fa-edit"></i>
           </a>{" "}
-          <a onClick={handleDelete} className="delete-post-button text-danger">
+          <a onClick={handleDelete} className="deletebtn" className="delete-post-button text-danger">
             <i className="fas fa-trash"></i>
           </a>
         </span>
@@ -41,8 +41,4 @@ function Details(props) {
   )
 }
 
-const contactDiv = {
-  width: "95%",
-  margin: "auto"
-}
 export default Details

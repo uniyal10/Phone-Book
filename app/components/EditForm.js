@@ -20,6 +20,8 @@ function EditForm(props) {
     try {
       let response = await Axios.post("/edit", { id: appState.editState.id, name: name, date: date, number: number, email: email })
       if (response.data) {
+        window.location.reload(false)
+        appDispatch({ type: "flashMessage", value: "Edit Contact sucessfully" })
         appDispatch({ type: "editClose", value: false })
         appDispatch.editState("editState", { id: appState.editState.id, name: name, date: date, number: number, email: email })
       }

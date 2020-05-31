@@ -22,6 +22,8 @@ function AddForm(props) {
       let response = await Axios.post("/add", { name, date, number, email })
       if (response.data) {
         appDispatch({ type: "addUserData", value: { name, date, number, email } })
+        appDispatch({ type: "flashMessage", value: "Add contact sucessfully" })
+
         props.setAdd(false)
         props.setLoading(false)
       }
