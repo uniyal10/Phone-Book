@@ -19,7 +19,7 @@ function AddForm(props) {
 
     props.setLoading(true)
     try {
-      let response = await Axios.post("http://localhost:8080/add", { name, date, number, email })
+      let response = await Axios.post("/add", { name, date, number, email })
       if (response.data) {
         appDispatch({ type: "addUserData", value: { name, date, number, email } })
         props.setAdd(false)

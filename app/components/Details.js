@@ -14,7 +14,7 @@ function Details(props) {
   }
   async function handleDelete(e) {
     try {
-      const response = await Axios.post("http://localhost:8080/delete", { id: props.contactDetails._id })
+      const response = await Axios.post("/delete", { id: props.contactDetails._id })
       if (response) {
         props.setDelete(true)
         console.log("sucessfully deleted")

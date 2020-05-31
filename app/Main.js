@@ -4,8 +4,9 @@ import Axios from "axios"
 import { useImmer } from "use-immer"
 import DispatchContext from "./DispatchContext"
 import StateContext from "./StateContext"
-
 import { useImmerReducer } from "use-immer"
+
+Axios.defaults.baseURL = process.env.BACKENDURL || "https://mynotebookcontactapp.herokuapp.com"
 
 //Components
 
@@ -69,7 +70,6 @@ function ExampleComponent() {
         })
         return
       case "editState":
-        console.log(action.value)
         draft.editState = action.value
         return
       case "updateState":
@@ -96,7 +96,7 @@ function ExampleComponent() {
     setLoading(true)
     async function getInitData() {
       try {
-        let response = await Axios.get("http://localhost:8080/")
+        let response = await Axios.get("/")
         State.list = response.data
         State.search = response.data
         setLoading(false)
@@ -107,18 +107,18 @@ function ExampleComponent() {
     getInitData()
   }, [])
 
-  useEffect(() => {
-    async function getInitData() {
-      try {
-        let response = await Axios.get("http://localhost:8080/")
-        State.list = response.data
-        State.search = response.data
-      } catch (e) {
-        console.log("something wrong")
-      }
-    }
-    getInitData()
-  }, [State.isEdit])
+  // useEffect(() => {
+  //   async function getInitData() {
+  //     try {
+  //       let response = await Axios.get("http://localhost:8080/")
+  //       State.list = response.data
+  //       State.search = response.data
+  //     } catch (e) {
+  //       console.log("something wrong")
+  //     }
+  //   }
+  //   getInitData()
+  // }, [State.isEdit])
 
   // useEffect(() => {
   //   async function getInitData() {
